@@ -5,7 +5,8 @@ from tracking import get_providers
 test = {
     'poczta': 'RQ065039102MY',
     'dhl': '16189726178',
-    'dpd': '0000014278741S'
+    'dpd': '0000014278741S',
+    'inpost': '605500093704359014606748'
 }
 
 
