@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import sys
 from plpackagetrack import tracking
 
 test = {
