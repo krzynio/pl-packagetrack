@@ -10,6 +10,7 @@ Supported providers:
 * Poczta Polska
 * DHL
 * DPD
+* Fedex
 
 Example:
 
@@ -29,7 +30,7 @@ print ("Available providers:", ', '.join(providers))
 
 # Available providers: dpd, poczta, dhl, inpost
 
-t = tracker.track('poczta', 'RQ065039102MY' )
+t = tracker.track('poczta', 'RQ065039102MY')
 print(t)
 print('----------')
 print(["%s" % n for n in t.items()])

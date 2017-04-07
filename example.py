@@ -11,9 +11,9 @@ providers = tracker.providers()
 
 print ("Available providers:", ', '.join(providers))
 
-# Available providers: dpd, poczta, dhl, inpost
+# Available providers: dpd, poczta, dhl, inpost, fedex
 
-t = tracker.track('poczta', 'RQ065039102MY' )
+t = tracker.track('poczta', 'RQ065039102MY')
 print(t)
 print('----------')
 print(["%s" % n for n in t.items()])
