@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import sys
-from tracking import get_providers
+from plpackagetrack import tracking
 
 test = {
     'poczta': 'RQ065039102MY',
@@ -9,12 +9,13 @@ test = {
     'inpost': '605500093704359014606748'
 }
 
+tracker = tracking()
+providers = tracker.providers()
 
-plugins = get_providers()
+print ("Available providers:", ', '.join(providers))
 
-
-for provider in test:
-    t = getattr(plugins[provider], 'track')(test[provider])
+for provider in test: 
+    t = tracker.track(provider,test[provider] )
     print('---- [%s] ----' % provider)
     print(t)
     print('----------')

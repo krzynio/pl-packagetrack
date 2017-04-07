@@ -19,18 +19,7 @@ class trackingStatus(object):
                 
     def items(self):
         return self._items
-
-    @classmethod
-    def get_providers():
-        plugins = {}
-
-        for module in sys.modules.keys():
-            if module.startswith('providers.'):
-                plugins[module[10:]] = locals()[module[10:]]
-        return(plugins)
-        
-    
-
+            
 class trackingEvent(object):
     def __init__(self, time, place, status):
         self._time = time

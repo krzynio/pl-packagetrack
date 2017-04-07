@@ -34,4 +34,4 @@ def track(number):
             events.append(trackingEvent(l[1], l[2], l[3]))
         i = i + 1
 
-    return trackingStatus(number, 'DHL', 'DONE', events[::-1])
+    return trackingStatus(number, 'dhl', 'DONE', events[::-1])

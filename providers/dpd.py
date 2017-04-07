@@ -53,5 +53,5 @@ def track(number):
         d = dateparser.parse("%s %s" % (l[0], l[1]), settings={'DATE_ORDER': 'YMD'})
         events.append(trackingEvent(d, OFFICES.get(l[3], l[3]), l[2]))
     
-    return trackingStatus(number, 'DPD', 'DONE', events)
+    return trackingStatus(number, 'dpd', 'DONE', events)
     

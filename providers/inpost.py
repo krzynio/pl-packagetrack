@@ -33,15 +33,17 @@ def track(number):
     
     events = []
         
-    for event in range(maxstatus):
+    for event in range(maxstatus+1):
         row = data['history']['index%d' % event]
         office = ''
         if row['pl'].startswith('Przyjęta w oddziale InPost - '):
             office = row['pl'][29:]
             status = row['pl'][0:26]
-            
-            d = dateparser.parse(row['changeDate'], settings={'DATE_ORDER': 'YMD'})
-            events.append(trackingEvent(d, office, "%s (%s)" % (status,row['pl_desc'])))
+        else:
+            office = ""
+            status = row['pl']    
+        d = dateparser.parse(row['changeDate'], settings={'DATE_ORDER': 'YMD'})
+        events.append(trackingEvent(d, office, "%s (%s)" % (status,row['pl_desc'])))
     
-    return trackingStatus(number, 'INPOST', 'DONE', events[::-1])
+    return trackingStatus(number, 'inpost', 'DONE', events[::-1])
 

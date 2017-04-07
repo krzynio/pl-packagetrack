@@ -48,5 +48,5 @@ def track(number):
                 events.append(trackingEvent(d, l[2], l[0]))
         i = i + 1
 
-    return trackingStatus(number, 'PPSA', 'DONE', events[::-1])
+    return trackingStatus(number, 'poczta', 'DONE', events[::-1])
 
