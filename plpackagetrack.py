@@ -17,7 +17,3 @@ class tracking(object):
         
     def track(self,provider,number):
         return(getattr(self._providers[provider], 'track')(number))
-        
-
-
-    

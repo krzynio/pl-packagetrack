@@ -28,7 +28,3 @@ class trackingEvent(object):
 
     def __str__(self):
         return "[%s] %s - %s" % (self._time, self._place, self._status)
-        
-    
-
-    
