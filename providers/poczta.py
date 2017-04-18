@@ -43,7 +43,7 @@ def track(number):
 
         if i > 0:
             l = [t.text() for t in row('td').items()]
-            if(l):
+            if (l):
                 d = dateparser.parse(l[1], settings={'DATE_ORDER': 'YMD'})
                 events.append(trackingEvent(d, l[2], l[0]))
         i = i + 1
