@@ -12,6 +12,7 @@ Supported providers:
 * DPD
 * Fedex
 * Ups
+* TNT
 
 Example:
 
