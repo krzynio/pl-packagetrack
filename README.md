@@ -12,6 +12,7 @@ Supported providers:
 * DPD
 * Fedex
 * Ups
+* TNT
 
 Example:
 
@@ -29,7 +30,7 @@ providers = tracker.providers()
 
 print ("Available providers:", ', '.join(providers))
 
-# Available providers: dpd, poczta, dhl, inpost, fedex, ups
+# Available providers: dpd, poczta, dhl, inpost, fedex, ups, tnt
 
 t = tracker.track('ups', '1Z3743EE6803254243')
 print(t)
