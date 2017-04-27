@@ -7,6 +7,7 @@ import time
 import logging
 import json
 import dateparser
+import re
 
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
 
@@ -28,11 +29,10 @@ def track(number):
 
 
     data = json.loads(r.text)
-
     maxstatus = int(data['maxStatusCode'][5:])
-    
     events = []
-        
+    status_ = 'TRANSIT'
+       
     for event in range(maxstatus+1):
         row = data['history']['index%d' % event]
         office = ''
@@ -44,6 +44,11 @@ def track(number):
             status = row['pl']    
         d = dateparser.parse(row['changeDate'], settings={'DATE_ORDER': 'YMD'})
         events.append(trackingEvent(d, office, "%s (%s)" % (status,row['pl_desc'])))
+        if re.search("Doręczono", status):
+            status_ = "DELIVERED"
     
-    return trackingStatus(number, 'inpost', 'DONE', events[::-1])
-
+    if len(events) > 0:
+        return trackingStatus(number, 'inpost', status_, events[::-1])
+    else:
+        return trackingStatus(number, 'inpost', 'NOTFOUND', [])
+    

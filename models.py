@@ -6,7 +6,10 @@ class trackingStatus(object):
         self._items = items
     
     def __str__(self):
-        return "[%s] %s - %s\n%s" % (self._status, self._provider, self._number, self._items[0])
+        if self._status != 'NOTFOUND':
+            return "[%s] %s - %s\n%s" % (self._status, self._provider, self._number, self._items[0])
+        else:
+            return "[%s] %s - %s\n%s" % (self._status, self._provider, self._number, None) 
     
     def number(self):
         return self._number

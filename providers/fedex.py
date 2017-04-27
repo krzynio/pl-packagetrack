@@ -4,6 +4,7 @@ import os
 import sys
 import requests
 from pyquery import PyQuery as pq
+import re
 
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
 
@@ -24,12 +25,18 @@ def track(number):
 
     d = pq(r.text)
     table = d('table.customContentable').eq(0)
-
+    status = 'TRANSIT'
     events = []
+
     for row in table('tr').items():
         if row.has_class('customContentTableRowOdd') or row.has_class('customContentTableRowEven'):
             stage = [t.text() for t in row('td').items()]
             stage_date = dateparser.parse("%s" % (stage[0]), settings={'DATE_ORDER': 'YMD'})
             events.append(trackingEvent(time=stage_date, place=stage[2], status=stage[1]))
-
-    return trackingStatus(number, 'fedex', 'DONE', events)
+            if re.search("Kurier doręczył przesyłkę do odbiorcy", stage[1]):
+                status = "DELIVERED"
+            
+    if len(events) > 0:
+        return trackingStatus(number, 'fedex', status, events)
+    else:
+        return trackingStatus(number, 'fedex', 'NOTFOUND', [])

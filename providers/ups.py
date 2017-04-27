@@ -10,7 +10,7 @@ sys.path.insert(1, os.path.join(sys.path[0], '..'))
 
 from models import trackingStatus, trackingEvent
 
-NAME = "Ups"
+NAME = "UPS"
 
 
 def track(number):
@@ -29,7 +29,7 @@ def track(number):
 
     d = pq(r.text)
     table = d('table.dataTable')
-
+    status = 'TRANSIT'
     events = []
     for x, row in enumerate(table('tr').items()):
         if x > 0:
@@ -43,5 +43,10 @@ def track(number):
 
             stage_date = dateparser.parse("{} {}".format(stage[1], stage[2]), settings={'DATE_ORDER': 'YMD'})
             events.append(trackingEvent(time=stage_date, place=stage[0], status=stage[3]))
-
-    return trackingStatus(number, 'ups', 'DONE', events)
+            if re.search("Doręczono", stage[3]):
+                status = "DELIVERED"
+    if len(events) > 0:
+        return trackingStatus(number, 'ups', status, events)
+    else:
+        return trackingStatus(number, 'ups', 'NOTFOUND', [])
+    

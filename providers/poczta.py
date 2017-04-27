@@ -6,6 +6,7 @@ from pyquery import PyQuery as pq
 import time
 import logging
 import dateparser
+import re
 
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
 
@@ -33,20 +34,25 @@ def track(number):
                     cookies = cookies
                     )
     
+    
     d = pq(r.text)
     table = d('table#zadarzenia_td')
     events = []
+    status = "TRANSIT"
     
     i = 0
     
     for row in table('tr').items():
-
         if i > 0:
             l = [t.text() for t in row('td').items()]
             if (l):
                 d = dateparser.parse(l[1], settings={'DATE_ORDER': 'YMD'})
                 events.append(trackingEvent(d, l[2], l[0]))
+                if re.search("(Odebrano|Doręczono)", l[0]):
+                    status = "DELIVERED"
         i = i + 1
 
-    return trackingStatus(number, 'poczta', 'DONE', events[::-1])
-
+    if len(events) > 0:
+        return trackingStatus(number, 'poczta', status, events[::-1])
+    else:
+        return trackingStatus(number, 'poczta', 'NOTFOUND', [])

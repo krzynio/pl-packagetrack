@@ -6,6 +6,7 @@ from pyquery import PyQuery as pq
 import time
 import logging
 import dateparser
+import re
 
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
 
@@ -25,6 +26,7 @@ def track(number):
     table = d('table#shipment-details-hdr-table')
     i = 0 
     events = []
+    status = "TRANSIT"
 
     for row in table('tr').items():
         if i > 0:
@@ -32,6 +34,12 @@ def track(number):
             d = dateparser.parse("%s %s" % (l[0], l[1]), settings={'DATE_ORDER': 'DMY'})
             l[1]=d
             events.append(trackingEvent(l[1], l[2], l[3]))
+            if re.search("doręczona do Odbiorcy", l[3]):
+                status = "DELIVERED"
+                
         i = i + 1
 
-    return trackingStatus(number, 'dhl', 'DONE', events[::-1])
+    if len(events) > 0:
+        return trackingStatus(number, 'dhl', status, events[::-1])
+    else:
+        return trackingStatus(number, 'dhl', 'NOTFOUND', [])
