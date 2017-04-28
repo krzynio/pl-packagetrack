@@ -13,6 +13,11 @@ sys.path.insert(1, os.path.join(sys.path[0], '..'))
 from models import trackingStatus,trackingEvent
 
 NAME = "DHL"
+ID = __name__[10:]
+POPULARITY = 5
+    
+def guess(number):
+    return len(number) == 11
 
 def track(number):
     r = requests.get("https://webapps.dhl.com.pl/app/tnt/old_cr_sn.aspx?SN=%s" % number, 
@@ -40,6 +45,6 @@ def track(number):
         i = i + 1
 
     if len(events) > 0:
-        return trackingStatus(number, 'dhl', status, events[::-1])
+        return trackingStatus(number, 'ID', status, events[::-1])
     else:
-        return trackingStatus(number, 'dhl', 'NOTFOUND', [])
+        return trackingStatus(number, 'ID', 'NOTFOUND', [])

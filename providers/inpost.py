@@ -14,8 +14,12 @@ sys.path.insert(1, os.path.join(sys.path[0], '..'))
 from models import trackingStatus,trackingEvent
 
 NAME = "InPost"
+ID = __name__[10:]
+POPULARITY = 9
 
-#logging.basicConfig(level=logging.DEBUG)
+def guess(number):
+    return len(number) == 24
+
 def track(number):
     
     r = requests.get("https://tracking.inpost.pl/api/v1/history/package[0]=%s?_=%d" % (number, time.time()*1000.0), 
@@ -29,7 +33,10 @@ def track(number):
 
 
     data = json.loads(r.text)
-    maxstatus = int(data['maxStatusCode'][5:])
+    try:
+        maxstatus = int(data['maxStatusCode'][5:])
+    except:
+        return trackingStatus(number, ID, 'NOTFOUND', [])
     events = []
     status_ = 'TRANSIT'
        
@@ -48,7 +55,7 @@ def track(number):
             status_ = "DELIVERED"
     
     if len(events) > 0:
-        return trackingStatus(number, 'inpost', status_, events[::-1])
+        return trackingStatus(number, ID, status_, events[::-1])
     else:
-        return trackingStatus(number, 'inpost', 'NOTFOUND', [])
+        return trackingStatus(number, ID, 'NOTFOUND', [])
     

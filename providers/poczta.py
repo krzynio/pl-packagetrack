@@ -13,6 +13,14 @@ sys.path.insert(1, os.path.join(sys.path[0], '..'))
 from models import trackingStatus,trackingEvent
 
 NAME = "Poczta Polska"
+ID = __name__[10:]
+POPULARITY = 10
+
+def guess(number):
+    if re.search("^[A-Z]{2}\d{9}[A-Z]{2}$", number): # International Postal Union
+        return True
+    return len(number) == 20 # domestic
+        
 
 def track(number):
     
@@ -53,6 +61,6 @@ def track(number):
         i = i + 1
 
     if len(events) > 0:
-        return trackingStatus(number, 'poczta', status, events[::-1])
+        return trackingStatus(number, ID, status, events[::-1])
     else:
-        return trackingStatus(number, 'poczta', 'NOTFOUND', [])
+        return trackingStatus(number, ID, 'NOTFOUND', [])

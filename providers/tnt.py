@@ -12,6 +12,11 @@ from models import trackingStatus, trackingEvent
 from exceptions import NotFoundPackage
 
 NAME = "TNT"
+ID = __name__[10:]
+POPULARITY = 0
+
+def guess(number):
+    return len(number) == 9
 
 
 def track(number):

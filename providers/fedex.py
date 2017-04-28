@@ -11,7 +11,11 @@ sys.path.insert(1, os.path.join(sys.path[0], '..'))
 from models import trackingStatus, trackingEvent
 
 NAME = "Fedex"
+ID = __name__[10:]
+POPULARITY = 1
 
+def guess(number):
+    return len(number) == 13
 
 def track(number):
     """Request tracking company about package status.
@@ -37,6 +41,6 @@ def track(number):
                 status = "DELIVERED"
             
     if len(events) > 0:
-        return trackingStatus(number, 'fedex', status, events)
+        return trackingStatus(number, ID, status, events)
     else:
-        return trackingStatus(number, 'fedex', 'NOTFOUND', [])
+        return trackingStatus(number, ID, 'NOTFOUND', [])
