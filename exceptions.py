@@ -1,3 +1,0 @@
-
-class NotFoundPackage(Exception):
-    pass

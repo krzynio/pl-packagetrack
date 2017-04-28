@@ -9,7 +9,6 @@ import requests
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
 
 from models import trackingStatus, trackingEvent
-from exceptions import NotFoundPackage
 
 NAME = "TNT"
 ID = __name__[10:]
