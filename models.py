@@ -29,14 +29,14 @@ class trackingEvent(object):
         self._place = place
         self._status = status
         
-        def status(self):
-            return self._status
+    def status(self):
+        return self._status
+    
+    def time(self):
+        return self._time
         
-        def time(self):
-            return self._time
-            
-        def place(self):
-            return self._place
+    def place(self):
+        return self._place
 
     def __str__(self):
         return "[%s] %s - %s" % (self._time, self._place, self._status)
