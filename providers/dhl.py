@@ -8,6 +8,7 @@ import logging
 import dateparser
 import re
 
+
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
 
 from models import trackingStatus,trackingEvent
