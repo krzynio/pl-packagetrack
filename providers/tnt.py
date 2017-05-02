@@ -14,7 +14,9 @@ NAME = "TNT"
 ID = __name__[10:]
 POPULARITY = 0
 
+
 def guess(number):
+    """Check length of number."""
     return len(number) == 9
 
 
@@ -32,25 +34,22 @@ def track(number):
     }
 
     r = requests.get("https://www.tnt.com/api/v1/shipment", params=payload)
-
     status = 'TRANSIT'
 
     if r.status_code == 200:
 
         data = json.loads(r.text)
-
         if 'notFound' in data['tracker.output']:
             return trackingStatus(number, 'tnt', 'NOTFOUND', [])            
         else:
-            track = data['tracker.output']['consignment'][0]['statusData']
+            tracking = data['tracker.output']['consignment'][0]['statusData']
 
             events = []
-            for row in track:
+            for row in tracking:
                 stage_date = dateparser.parse("{} {}".format(row['localEventDate'], row['localEventTime']), settings={'DATE_ORDER': 'YMD'})
                 events.append(trackingEvent(time=stage_date, place=row['depot'], status=row['statusDescription']))
-                if re.search("Przesyłka dostarczona",row['statusDescription']):
+                if re.search("Przesyłka dostarczona", row['statusDescription']):
                     status = "DELIVERED"
-
             return trackingStatus(number, 'tnt', status, events)
     else:
             return trackingStatus(number, 'tnt', 'NOTFOUND', [])
