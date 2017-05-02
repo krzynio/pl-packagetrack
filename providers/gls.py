@@ -38,7 +38,7 @@ def track(number):
 
         data = json.loads(r.text)
         if 'lastError' in data:
-            return trackingStatus(number, 'gls', 'NOTFOUND', [])
+            return trackingStatus(number, ID, 'NOTFOUND', [])
         else:
             tracking = data['tuStatus'][0]['history']
             events = []
@@ -47,6 +47,6 @@ def track(number):
                 events.append(trackingEvent(time=stage_date, place=row['address']['city'], status=row['evtDscr']))
                 if re.search("Paczka doreczona", row['evtDscr']):
                     status = "DELIVERED"
-            return trackingStatus(number, 'gls', status, events)
+            return trackingStatus(number, ID, status, events)
     else:
-        return trackingStatus(number, 'gls', 'NOTFOUND', [])
+        return trackingStatus(number, ID, 'NOTFOUND', [])

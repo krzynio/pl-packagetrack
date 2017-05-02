@@ -40,7 +40,7 @@ def track(number):
 
         data = json.loads(r.text)
         if 'notFound' in data['tracker.output']:
-            return trackingStatus(number, 'tnt', 'NOTFOUND', [])            
+            return trackingStatus(number, ID, 'NOTFOUND', [])
         else:
             tracking = data['tracker.output']['consignment'][0]['statusData']
 
@@ -50,6 +50,6 @@ def track(number):
                 events.append(trackingEvent(time=stage_date, place=row['depot'], status=row['statusDescription']))
                 if re.search("Przesyłka dostarczona", row['statusDescription']):
                     status = "DELIVERED"
-            return trackingStatus(number, 'tnt', status, events)
+            return trackingStatus(number, ID, status, events)
     else:
-            return trackingStatus(number, 'tnt', 'NOTFOUND', [])
+            return trackingStatus(number, ID, 'NOTFOUND', [])
