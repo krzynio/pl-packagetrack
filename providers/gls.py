@@ -10,14 +10,14 @@ sys.path.insert(1, os.path.join(sys.path[0], '..'))
 
 from models import trackingStatus, trackingEvent
 
-NAME = "TNT"
+NAME = "GLS"
 ID = __name__[10:]
 POPULARITY = 0
 
 
 def guess(number):
     """Check length of number."""
-    return len(number) == 9
+    return len(number) == 11
 
 
 def track(number):
@@ -28,28 +28,25 @@ def track(number):
     """
 
     payload = {
-        'con': number,
-        'locale': 'pl_PL',
-        'searchType': 'CON'
+        'match': number
     }
 
-    r = requests.get("https://www.tnt.com/api/v1/shipment", params=payload)
+    r = requests.get("https://gls-group.eu/app/service/open/rest/PL/pl/rstt001", params=payload)
     status = 'TRANSIT'
 
     if r.status_code == 200:
 
         data = json.loads(r.text)
-        if 'notFound' in data['tracker.output']:
+        if 'lastError' in data:
             return trackingStatus(number, ID, 'NOTFOUND', [])
         else:
-            tracking = data['tracker.output']['consignment'][0]['statusData']
-
+            tracking = data['tuStatus'][0]['history']
             events = []
             for row in tracking:
-                stage_date = dateparser.parse("{} {}".format(row['localEventDate'], row['localEventTime']), settings={'DATE_ORDER': 'YMD'})
-                events.append(trackingEvent(time=stage_date, place=row['depot'], status=row['statusDescription']))
-                if re.search("Przesyłka dostarczona", row['statusDescription']):
+                stage_date = dateparser.parse("{} {}".format(row['date'], row['time']), settings={'DATE_ORDER': 'YMD'})
+                events.append(trackingEvent(time=stage_date, place=row['address']['city'], status=row['evtDscr']))
+                if re.search("Paczka doreczona", row['evtDscr']):
                     status = "DELIVERED"
             return trackingStatus(number, ID, status, events)
     else:
-            return trackingStatus(number, ID, 'NOTFOUND', [])
+        return trackingStatus(number, ID, 'NOTFOUND', [])

@@ -21,13 +21,9 @@ def guess(number):
     return len(number) == 11
 
 def track(number):
-    r = requests.get("https://webapps.dhl.com.pl/app/tnt/old_cr_sn.aspx?SN=%s" % number, 
-                    headers = {               
-                                'User-agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36",
-                    
-                                 },
-   
-                    )
+    r = requests.get("https://webapps.dhl.com.pl/app/tnt/old_cr_sn.aspx?SN=%s" % number, headers={
+        'User-agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36"
+    })
     d = pq(r.text)
     table = d('table#shipment-details-hdr-table')
     i = 0 
@@ -42,7 +38,6 @@ def track(number):
             events.append(trackingEvent(l[1], l[2], l[3]))
             if re.search("doręczona do Odbiorcy", l[3]):
                 status = "DELIVERED"
-                
         i = i + 1
 
     if len(events) > 0:
