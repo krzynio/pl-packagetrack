@@ -19,6 +19,9 @@ class tracking(object):
     def track(self, provider, number):
         return (getattr(self._providers[provider], 'track')(number))
 
+    def long_name(self, provider):
+        return (getattr(self._providers[provider], 'NAME'))
+
     def guess(self, number):
         order = {}
         
