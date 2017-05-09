@@ -30,9 +30,8 @@ def track(number):
                                  },
    
                     )
-
-
     data = json.loads(r.text)
+
     try:
         maxstatus = int(data['maxStatusCode'][5:])
     except:
@@ -41,18 +40,19 @@ def track(number):
     status_ = 'TRANSIT'
        
     for event in range(maxstatus+1):
-        row = data['history']['index%d' % event]
-        office = ''
-        if row['pl'].startswith('Przyjęta w oddziale InPost - '):
-            office = row['pl'][29:]
-            status = row['pl'][0:26]
-        else:
-            office = ""
-            status = row['pl']    
-        d = dateparser.parse(row['changeDate'], settings={'DATE_ORDER': 'YMD'})
-        events.append(trackingEvent(d, office, "%s (%s)" % (status,row['pl_desc'])))
-        if re.search("Doręczono", status):
-            status_ = "DELIVERED"
+        if 'index%d' % event in data['history']:
+            row = data['history']['index%d' % event]
+            office = ''
+            if row['pl'].startswith('Przyjęta w oddziale InPost - '):
+                office = row['pl'][29:]
+                status = row['pl'][0:26]
+            else:
+                office = ""
+                status = row['pl']    
+            d = dateparser.parse(row['changeDate'], settings={'DATE_ORDER': 'YMD'})
+            events.append(trackingEvent(d, office, "%s (%s)" % (status,row['pl_desc'])))
+            if re.search("Doręczono", status):
+                status_ = "DELIVERED"
     
     if len(events) > 0:
         return trackingStatus(number, ID, status_, events[::-1])
