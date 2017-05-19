@@ -28,10 +28,10 @@ OFFICES = {
     'WA2': 'Warszawa',
     'WA3': 'Pruszków',
     'WA4': 'Warszawa',
-    'KIE': 'Kielce'
+    'KIE': 'Kielce',
     'WBA': 'Wałbrzych',
     'WRO': 'Wrocław',
-    'ZGR': 'Zielona Góra'
+    'ZGR': 'Zielona Góra',
 }
 
 def guess(number):
