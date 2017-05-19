@@ -27,6 +27,8 @@ OFFICES = {
     'WA1': 'Warszawa',
     'WA2': 'Warszawa',
     'WA3': 'Pruszków',
+    'WA4': 'Warszawa',
+    'KIE': 'Kielce'
     'WBA': 'Wałbrzych',
     'WRO': 'Wrocław',
     'ZGR': 'Zielona Góra'
