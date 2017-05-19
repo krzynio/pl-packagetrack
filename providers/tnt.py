@@ -17,7 +17,7 @@ POPULARITY = 0
 
 def guess(number):
     """Check length of number."""
-    return len(number) == 9
+    return len(number) == 9 and number.isdigit()
 
 
 def track(number):
@@ -26,6 +26,9 @@ def track(number):
     :param number: package number in tracking company
     :return: Package status
     """
+
+    if number.startswith('LX'):
+        return trackingStatus(number, ID, 'NOTFOUND', [])
 
     payload = {
         'con': number,
