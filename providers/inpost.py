@@ -50,7 +50,8 @@ def track(number):
                 office = ""
                 status = row['pl']    
             d = dateparser.parse(row['changeDate'], settings={'DATE_ORDER': 'YMD'})
-            events.append(trackingEvent(d, office, "%s (%s)" % (status,row['pl_desc'])))
+            print(row)
+            events.append(trackingEvent(d, office, status))
             if re.search("Doręczono", status):
                 status_ = "DELIVERED"
     
