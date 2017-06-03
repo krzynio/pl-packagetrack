@@ -18,7 +18,7 @@ ID = __name__[10:]
 POPULARITY = 9
 
 def guess(number):
-    return len(number) == 24
+    return len(number) == 10
 
 def track(number):
     
