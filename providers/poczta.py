@@ -52,9 +52,16 @@ def track(number):
     
     for row in table('tr').items():
         if i > 0:
-            l = [t.text() for t in row('td').items()]
-            if (l):
+            l = [t.text() for t in (row('td').items())]
+            adr = row('td a.jedn').attr('title')
+
+            if adr and '|' in adr:
+                l.append(', '.join(adr.split('|')[0:2]))
+
+            if l:
                 d = dateparser.parse(l[1], settings={'DATE_ORDER': 'YMD'})
+                if len(l) == 4:
+                    l[2] = "%s - %s" % (l[2], l[3])
                 events.append(trackingEvent(d, l[2], l[0]))
                 if re.search("(Odebrano|Doręczono)", l[0]):
                     status = "DELIVERED"
