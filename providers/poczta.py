@@ -56,7 +56,7 @@ def track(number):
             if (l):
                 d = dateparser.parse(l[1], settings={'DATE_ORDER': 'YMD'})
                 events.append(trackingEvent(d, l[2], l[0]))
-                if re.search("(Odebrano|Doręczono|Przekazano do doręczenia)", l[0]):
+                if re.search("(Odebrano|Doręczono)", l[0]):
                     status = "DELIVERED"
         i = i + 1
 
