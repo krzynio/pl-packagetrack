@@ -22,7 +22,7 @@ def guess(number):
 
 def track(number):
     
-    r = requests.get("https://tracking.inpost.pl/api/v1/history/package[0]=%s?_=%d" % (number, time.time()*1000.0), 
+    r = requests.get("https://api-shipx-pl.easypack24.net/api/v1/history/package[0]=%s?_=%d" % (number, time.time()*1000.0), 
                     headers = {
                                 'Referer': "https://inpost.pl/pl/pomoc/znajdz-przesylke?parcel=%s" % number,
                                 'User-agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36",
