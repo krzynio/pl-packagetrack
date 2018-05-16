@@ -2,6 +2,8 @@
 
 PL-PackageTrack is a polish package tracking scraping and parser library written in Python 3
 
+See it in action: https://znajdzpaczke.pl/ and track your packages with Facebook bot.
+
 Work in progress.
 
 Supported providers:
