@@ -42,7 +42,7 @@ def track(number):
             for t in row('td').items():
                 td = t.text()
                 td = td.translate({ord(c): None for c in '\n\t\r'})
-                td = re.sub('\s+', ' ', td)
+                td = re.sub(r'\s+', ' ', td)
                 stage.append(td)
 
             stage_date = dateparser.parse("{} {}".format(stage[1], stage[2]), settings={'DATE_ORDER': 'YMD'})
