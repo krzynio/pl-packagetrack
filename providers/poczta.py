@@ -17,7 +17,7 @@ ID = __name__[10:]
 POPULARITY = 10
 
 def guess(number):
-    if re.search("^[A-Z]{2}\d{9}[A-Z]{2}$", number): # International Postal Union
+    if re.search(r"^[A-Z]{2}\d{9}[A-Z]{2}$", number): # International Postal Union
         return True
     return len(number) == 20 # domestic
         
