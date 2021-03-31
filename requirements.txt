@@ -1,6 +1,6 @@
 cssselect==1.0.1
 dateparser==0.6.0
-lxml==3.7.3
+lxml==4.6.3
 pyquery==1.2.17
 python-dateutil==2.6.0
 pytz==2017.2
